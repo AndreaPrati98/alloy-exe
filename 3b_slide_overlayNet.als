@@ -44,6 +44,16 @@ fact atLeastOneAttachedIfOverlayNet {
             all n:Node | n.belongsTo = net and #(n.isAttachedTo) > 0
 }
 
+// at least one node per each net
+fact atLeastOneNodePerNet {
+    all net:Network| some n:Node | n.belongsTo = net
+    // all the nets, taken one or more nodes are equal to 
+    // the net the nodes are in 
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////
+
 pred show{}
 
 assert f3{
@@ -56,4 +66,4 @@ assert f3{
 
 check f3 for 6
 
-run show
+run show for 4 but 2 Network
