@@ -61,13 +61,24 @@ pred isReachable[n1,n2:Node] {
 
 pred show{}
 
+assert f1{
+    all disj n1, n2:Node | n1 in n2.isLinkedTo implies 
+    #(n1.belongsTo & n2.belongsTo) > 0
+}
+
+check f1 for 6
+
+assert f2{
+    all disj n1, n2:Node | n1 in n2.isAttachedTo implies #(n1.belongsTo & n2.belongsTo.uses) > 0
+}
+
+check f2 for 6
+
 assert f3{
     all ntw: Network| some ntw2: Network | ntw2 in ntw.uses
     implies 
     all n:Node | n.belongsTo = ntw implies n.isAttachedTo != none
 }
-
-
 
 check f3 for 6
 
