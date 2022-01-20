@@ -7,6 +7,11 @@ sig Event{
     topic: Topic
 }
 
+sig Configuration {
+    publishers: set Publisher,
+    subscribers: set Subscriber
+}
+
 sig Publisher extends Component {
     topicsPublished: set Topic
 } {#(buff) <= 10}
@@ -14,6 +19,13 @@ sig Publisher extends Component {
 sig Subscriber extends Component{
     topicsSubscribed: set Topic
 } {#(buff) <= 5 }
+
+//////////////////////////////////////////
+
+fact consistencyConfig {
+    all c: Configuration |
+        c.subscribers.buff in c.publishers.buff
+}
 
 fact consistencyPub {
     all p:Publisher | 
@@ -40,8 +52,8 @@ assert cardinality {
 check cardinality for 10
 
 pred show{
-    all s:Subscriber |
-        #(s.buff) > 0 // at least one event in the buffer
+    all c:Configuration |
+        #(c.subscribers.buff) > 0
 }
 
-run show for 5 but 1 Publisher, 6 int 
+run show for 5 but 1 Configuration, 6 int 
