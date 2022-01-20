@@ -51,6 +51,11 @@ fact atLeastOneNodePerNet {
     // the net the nodes are in 
 }
 
+// Given a pair of nodes this pred is true if there exists a path
+// from n2 to n1 alsi if through more nodes
+pred isReachable[n1,n2:Node] {
+    n1 in n2.^isLinkedTo
+}
 
 ////////////////////////////////////////////////////////////////////////////////////
 
