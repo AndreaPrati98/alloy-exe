@@ -1,18 +1,23 @@
-abstract sig Person{
-
-} 
+abstract sig Person{} 
 
 sig Man extends Person {
-    hasWife: Woman
+    hasWife: lone Woman
 }
 sig Woman extends Person{
-    hasHusband: Man
+    hasHusband: lone Man
 }
 
-fact atLeastOneManAndOneWoman {
-    #Man >= 1 and #Woman >= 1
+// fact atLeastOneManAndOneWoman {
+//     #Man >= 1 and #Woman >= 1
+// }
+
+fact oneHusbandOneWife {
+    all m:Man, w:Woman | m.hasWife = w iff w.hasHusband = m
 }
 
-pred show{}
+pred show{
+    // #Man > 2
+    // #Woman > 2
+}
 
-run show for 6 int
+run show for 5 but 6 int 
