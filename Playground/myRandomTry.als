@@ -1,4 +1,7 @@
-abstract sig Person{} 
+abstract sig Person{
+    hasFather: Man,
+    hasMother: Woman
+}
 
 sig Man extends Person {
     hasWife: lone Woman
@@ -7,17 +10,15 @@ sig Woman extends Person{
     hasHusband: lone Man
 }
 
-// fact atLeastOneManAndOneWoman {
-//     #Man >= 1 and #Woman >= 1
-// }
-
 fact oneHusbandOneWife {
     all m:Man, w:Woman | m.hasWife = w iff w.hasHusband = m
+    // every man has a wife only if he is also her wife and viceversa
 }
 
-pred show{
-    // #Man > 2
-    // #Woman > 2
+fact notOwnParent {
+	no p:Person | p in p.hasFather or p in p.hasMother
 }
 
-run show for 5 but 6 int 
+pred show{}
+
+run show for 5
