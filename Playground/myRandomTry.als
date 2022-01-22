@@ -25,10 +25,18 @@ fact notOwnMother {
 	no p:Person | p = p.hasMother
 }
 
-//fact notMarried with an anchestor
+fact notMarriedWithAnchestor {
+	no m: Man, w: Woman | m.hasWife in m.^(hasFather+hasMother) or
+		w.hasHusband in w.(^hasFather + hasMother)
+}
+
+//fact notMarriedWithChildOfAnchestor {
+//	no m:Man, w:Woman | w = m.hasWife in 
+//}
+
 
 pred show {
 
 }
 
-run show for 6 int
+run show for 10 but 6 int
