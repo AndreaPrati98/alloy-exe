@@ -62,6 +62,7 @@ pred getBCR[d0, d1: BCRdispencer, c0,c1: Customer, r: BCR] {
 	d1.holdBCRs = d0.holdBCRs - r
 	c1.isUsualClient = c0.isUsualClient
 	c1.takenBCR = c0.takenBCR + r
+	c1.hasBill = c0.hasBill
 }
 
 assert noMoreThanOneCustomerPerBCR {
