@@ -26,8 +26,8 @@ fact notOwnMother {
 }
 
 fact notMarriedWithAnchestor {
-	no m: Man, w: Woman | m.hasWife in m.^(hasFather+hasMother) or
-		w.hasHusband in w.(^hasFather + hasMother)
+	no m: Man, w: Woman | m.hasWife in m.^(hasFather+hasMother) and
+		w.hasHusband in w.^(hasFather + hasMother)
 }
 
 //fact notMarriedWithChildOfAnchestor {
