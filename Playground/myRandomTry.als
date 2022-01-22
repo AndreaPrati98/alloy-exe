@@ -1,12 +1,14 @@
-abstract sig Person{
-    hasFather: Man,
-    hasMother: Woman
-}
+abstract sig Person {
+    hasFather: lone Man,
+    hasMother: lone Woman
+} 
+// i set them to 'lone' because otherwise would have been 
+// too difficult to find the model with the analyzer
 
 sig Man extends Person {
     hasWife: lone Woman
 }
-sig Woman extends Person{
+sig Woman extends Person {
     hasHusband: lone Man
 }
 
@@ -15,10 +17,18 @@ fact oneHusbandOneWife {
     // every man has a wife only if he is also her wife and viceversa
 }
 
-fact notOwnParent {
-	no p:Person | p in p.hasFather or p in p.hasMother
+fact notOwnFather {
+	no p:Person | p = p.hasFather
 }
 
-pred show{}
+fact notOwnMother {
+	no p:Person | p = p.hasMother
+}
 
-run show for 5
+//fact notMarried with an anchestor
+
+pred show {
+
+}
+
+run show for 6 int
