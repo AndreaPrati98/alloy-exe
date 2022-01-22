@@ -26,17 +26,29 @@ fact notOwnMother {
 }
 
 fact notMarriedWithAnchestor {
-	no m: Man, w: Woman | m.hasWife in m.^(hasFather+hasMother) and
+	no m: Man, w: Woman | m.hasWife in m.^(hasFather+hasMother) or
 		w.hasHusband in w.^(hasFather + hasMother)
 }
 
-//fact notMarriedWithChildOfAnchestor {
-//	no m:Man, w:Woman | w = m.hasWife in 
-//}
+fact notYourOwnAnchestor {
+	no m: Man, w: Woman | 
+		m in m.^(hasFather+hasMother) and
+		w in w.^(hasFather+hasMother) 
+}
 
+// not married if they have common anchestors
+fact notMarriedWithChildOfAnchestors {
+	no m: Man, w: Woman | not haveCommonAnchestor[m, w]
+}
 
-pred show {
+// has common anchestor
+pred haveCommonAnchestor[m: Man, w: Woman] {
+	m.^(hasFather + hasMother) in w.^(hasFather + hasMother)
 
 }
+
+///
+
+pred show {}
 
 run show for 10 but 6 int
